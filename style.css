@@ -1,0 +1,206 @@
+body {
+    background-image: url('fondo.jpeg');
+    background-size: 100% 100%; 
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #1a1a1a; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#flash {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: white;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-out;
+}
+.flash-active { opacity: 1 !important; }
+
+.header {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 1);
+    z-index: 20;
+}
+.header h1 {
+    font-family: 'Isometra', serif;
+    font-size: 70px;
+    margin: 0;
+    color: #2d3436; 
+}
+.header p {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 18px;
+    margin-top: -5px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* El contenedor principal forzado a NO romperse hacia abajo */
+.main-container {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: nowrap; /* Obliga a mantener las 3 columnas en la misma línea */
+    gap: 30px; 
+    justify-content: center; 
+    align-items: flex-start; /* Mantiene todo alineado a la parte superior */
+    width: 95%;
+    max-width: 1400px; /* Espacio extra para que todo quepa cómodamente */
+    margin-top: 80px; 
+}
+
+/* Estilo unificado para los paneles laterales */
+.panel-container {
+    background: rgba(255, 255, 255, 0.95); 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+    min-width: 250px;
+    flex-shrink: 0; /* Evita que los paneles se encojan */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Controles de la Izquierda */
+.controls-container h3 {
+    margin-bottom: 20px;
+    color: #2d3436;
+}
+.controls-container label {
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.controls-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+    background: white;
+    cursor: pointer;
+}
+
+/* Centro: Cámara */
+.camera-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    min-width: 400px;
+}
+.camera-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #000;
+    border: 8px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+    margin-bottom: 20px;
+}
+video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    transform: scaleX(-1);
+    display: block;
+    transition: filter 0.3s;
+}
+
+#countdown {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 140px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 20px rgba(0,0,0,0.8);
+    z-index: 10;
+}
+.hidden { display: none !important; }
+
+/* Derecha: Resultados y Grid Inteligente */
+#photo-strip {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+}
+
+.grid-layout-1, .grid-layout-3 { grid-template-columns: 1fr; }
+.grid-layout-1 img, .grid-layout-3 img { width: 200px; }
+
+.grid-layout-4, .grid-layout-6 { grid-template-columns: 1fr 1fr; }
+.grid-layout-4 img, .grid-layout-6 img { width: 140px; } 
+
+#photo-strip img {
+    border: 4px solid white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+button {
+    color: white;
+    border: none;
+    padding: 15px 24px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.btn-primary { background-color: #ff4757; font-size: 18px; }
+.btn-primary:hover { background-color: #ff6b81; transform: scale(1.02); }
+
+.btn-success { background-color: #2ed573; }
+.btn-success:hover { background-color: #7bed9f; }
+
+.btn-secondary { background-color: #576574; }
+.btn-secondary:hover { background-color: #8395a7; }
+
+/* --- ADAPTACIÓN PARA PANTALLAS PEQUEÑAS (CELULARES) --- */
+@media (max-width: 1024px) {
+    .main-container {
+        flex-direction: column !important; /* Cambia de fila a columna */
+        align-items: center !important;
+        gap: 20px;
+        margin-top: 120px; /* Baja un poco para no tapar el título */
+    }
+    .panel-container, .camera-wrapper {
+        width: 100%;
+        max-width: 500px;
+    }
+    .header h1 {
+        font-size: 50px; /* Achicamos un poco el título en celulares */
+    }
+}
